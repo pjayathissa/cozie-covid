@@ -7,7 +7,7 @@
 
 ### Patient Requirements
 - I am worried about my positive diagnosis, but I can't go to the hospital all the time due to my infection rate. I would like to remotely let doctors know about my situation and have them watch over me
-- I don't want to deal with
+- I don't want a complex app which requires logins
 
 
 ### Clinician Requirements
