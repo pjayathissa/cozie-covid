@@ -240,16 +240,6 @@ const jsonFlow = document.getElementById("json-flow");
 let flow_views = [jsonFlow, thankyou];
 // Used to set all views to none when switching between screens
 const allViews = [
-    warmCold,
-    brightDim,
-    loudQuiet,
-    indoorOutdoor,
-    inOffice,
-    happySad,
-    clothing,
-    svg_air_vel,
-    svg_met,
-    svg_change,
     clockface,
     thankyou,
     clockblock,
@@ -364,6 +354,7 @@ function processAllFiles() {
     }
 }
 
+//TODO: Consider deleting the small icons
 function mapFlows(flowSelector) {
     flow_views = [];
     //set opacity of all small icons to 0.2
@@ -386,56 +377,15 @@ processAllFiles();
 
 let currentView = 0; //current view of flow
 
-// buttons
+// home screen buttons
 const comfy = document.getElementById("comfy");
 const notComfy = document.getElementById("not-comfy");
-// buttons
-const indoor = document.getElementById("indoor");
-const outdoor = document.getElementById("outdoor");
-// buttons
-const location_work = document.getElementById("location_work");
-const location_home = document.getElementById("location_home");
-const location_other = document.getElementById("location_other");
-const location_portable = document.getElementById("location_portable");
-// buttons
-const change_no = document.getElementById("change_no");
-const change_yes = document.getElementById("change_yes");
-// buttons
-const thermal_comfy = document.getElementById("thermal_comfy");
-const prefer_warm = document.getElementById("prefer_warm");
-const prefer_cold = document.getElementById("prefer_cold");
-// back and stop buttons
+
+// flow buttons
 const flow_back = document.getElementById("flow_back");
 const flow_stop = document.getElementById("flow_stop");
-// buttons
-const noise_comfy = document.getElementById("noise_comfy");
-const prefer_bright = document.getElementById("prefer_bright");
-const prefer_dim = document.getElementById("prefer_dim");
-// buttons
-const light_comfy = document.getElementById("light_comfy");
-const prefer_loud = document.getElementById("prefer_loud");
-const prefer_quiet = document.getElementById("prefer_quiet");
-// buttons
-const neutral = document.getElementById("neutral");
-const happy = document.getElementById("happy");
-const sad = document.getElementById("sad");
-// buttons
-const clothes_very_light = document.getElementById("clothes_very_light");
-const clothes_light = document.getElementById("clothes_light");
-const clothes_medium = document.getElementById("clothes_medium");
-const clothes_high = document.getElementById("clothes_high");
-// buttons
-const met_resting = document.getElementById("met_resting");
-const met_sitting = document.getElementById("met_sitting");
-const met_standing = document.getElementById("met_standing");
-const met_exercising = document.getElementById("met_exercising");
-// buttons air velocity
-const air_vel_low = document.getElementById("air_vel_low");
-const air_vel_medium = document.getElementById("air_vel_medium");
-const air_vel_high = document.getElementById("air_vel_high");
 
-// buttons json
-//TODO: Simplify this
+// flow buttons json
 const centerButton = document.getElementById("new-button-center");
 const rightButton = document.getElementById("new-button-right");
 const leftButton = document.getElementById("new-button-left");
@@ -566,13 +516,11 @@ for (const button of buttons) {
     button.obj.addEventListener("click", () => {
         /** Constantly monitors if any buttons have been pressed */
         // init data object on first view click
-        console.log("clicked");
-        console.log("current view is", currentView);
         if (button.attribute === "comfort") {
             // if any of the two buttons in the main view have been pressed initiate the loop through the selected
 
-            // smallIcons.map(icon => icon.style.opacity = 0);
             initiateFeedbackData();
+            feedbackData["ok"] = button.value;
         } else if (button.attribute === "flow_control") {
             // if any of the two buttons (back arrow or cross) have been selected
             if (button.value === "flow_back") {
@@ -583,8 +531,9 @@ for (const button of buttons) {
                     // if user pressed back button in first question survey
                     showMessageStopSurvey();
                 } else {
-                    // show previous view
-                    showFace(flow_views[currentView]);
+                    // show previous view with flowback set to true
+                    let flowback
+                    showFace(flowback = true);
                 }
             } else if (button.value === "flow_stop") {
                 // stop_flow button was pressed
@@ -595,7 +544,12 @@ for (const button of buttons) {
         console.log(`${button.value} clicked`);
 
         if (button.attribute !== "flow_control") {
-            feedbackData[button.attribute] = button.value;
+            if(button.attribute != "comfort"){
+                console.log(currentView)
+                //need to associate it to the prevous view
+                feedbackData[covidFlow[currentView-1].name] = button.value;
+            }
+            console.log(JSON.stringify(feedbackData))
 
             if (covidFlow.length == currentView) {
                 console.log("all covid flow done, showing thankyou");
@@ -610,40 +564,76 @@ for (const button of buttons) {
     });
 }
 
-function showFace() {
+function showFace(flowback=false) {
+
+    let skipQuestion = false
+
+    // go through all views and set to none, show jsonFlow
     allViews.map((v) => {
         v.style.display = "none";
     });
     jsonFlow.style.display = "inline";
 
-    document.getElementById("question-text").text =
-        covidFlow[currentView].questionText;
+    //Does current flow have any requirements?
+    if (covidFlow[currentView].requiresAnswer.length !== 0) {
 
-    document.getElementById("circle-left").style.fill =
-        covidFlow[currentView].iconColors[0];
-    document.getElementById("circle-right").style.fill =
-        covidFlow[currentView].iconColors[1];
-    document.getElementById("circle-center").style.fill =
-        covidFlow[currentView].iconColors[2];
+        //if so, see if the current feedback meets throse requirements
+        covidFlow[currentView].requiresAnswer.map((req) => {
+            if (feedbackData[req.question] != req.value) {
+                //requirements not met, skipping question
+                skipQuestion = true
+            }
+        });
 
-    document.getElementById("image-left").href =
-        covidFlow[currentView].iconImages[0];
-    document.getElementById("image-right").href =
-        covidFlow[currentView].iconImages[1];
-    document.getElementById("image-center").href =
-        covidFlow[currentView].iconImages[2];
+    }
 
-    document.getElementById("button-left-text").text =
-        covidFlow[currentView].iconText[0];
-    document.getElementById("button-right-text").text =
-        covidFlow[currentView].iconText[1];
-    document.getElementById("button-center-text").text =
-        covidFlow[currentView].iconText[2];
-    console.log("incrementing currentView");
-    currentView++;
+    if (skipQuestion === false) {
+
+        // Set title of question
+        document.getElementById("question-text").text =
+            covidFlow[currentView].questionText;
+
+        // set buttons
+        const buttonLocations = ["left", "right", "center"]
+        // hide all buttons
+        buttonLocations.forEach((location) => {
+            document.getElementById("new-button-" + location).style.display = "none"
+        })
+
+        // map through each text element in flow and map to button
+        covidFlow[currentView].iconText.forEach((text, ii) =>{
+            // first show the button
+            document.getElementById("new-button-" + buttonLocations[ii]).style.display = "inline"
+
+            // then map the circle color, image, and text
+            document.getElementById("circle-" + buttonLocations[ii]).style.fill = 
+                covidFlow[currentView].iconColors[ii];
+            document.getElementById("image-" + buttonLocations[ii]).href =
+                covidFlow[currentView].iconImages[ii];
+            document.getElementById("button-text-" + buttonLocations[ii]).text =
+                covidFlow[currentView].iconText[ii];
+        })
+
+        // move onto next flow
+        currentView++;
+    }
+
+    // skipping question
+    else if (skipQuestion == true) {
+        // if we arrived here through the back button, then skip backwards
+        if (flowback === true) {
+            currentView--
+            showFace(flowback = true)
+        // if we arrived here through the normal flow, skip forwards
+        } else {
+            currentView++;
+            showFace()
+        }
+    }
 
     vibration.start("bump");
 }
+
 
 //-------- END (DEFINE VIEWS BASED ON FLOW SELECTOR) -----------
 
@@ -667,7 +657,7 @@ function vibrate() {
         // Reset currentView to prevent an unattended fitbit from moving through the flow
         currentView = 0;
         // go to first item in the flow
-        showFace(flow_views[currentView]);
+        showFace();
     }
     //Stop vibration after 5 seconds
     setTimeout(function() {
