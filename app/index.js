@@ -239,28 +239,8 @@ const jsonFlow = document.getElementById("json-flow");
 // Default shows only thank you screen in the flow
 let flow_views = [jsonFlow, thankyou];
 // Used to set all views to none when switching between screens
-const allViews = [
-    clockface,
-    thankyou,
-    clockblock,
-    svg_stop_survey,
-    jsonFlow,
-];
+const allViews = [clockface, thankyou, clockblock, svg_stop_survey, jsonFlow];
 let flowSelectorUpdateTime = 0;
-
-//read small icons
-const smallIcons = [
-    document.getElementById("small-thermal"),
-    document.getElementById("small-light"),
-    document.getElementById("small-noise"),
-    document.getElementById("small-indoor"),
-    document.getElementById("small-office"),
-    document.getElementById("small-mood"),
-    document.getElementById("small-clothing"),
-    document.getElementById("small-velocity"),
-    document.getElementById("small-met"),
-    document.getElementById("small-any-change"),
-];
 
 // Flow may have been previously saved locally as flow.txt
 let flowFileRead;
@@ -354,15 +334,12 @@ function processAllFiles() {
     }
 }
 
-//TODO: Consider deleting the small icons
+//TODO: check if this is needed still
 function mapFlows(flowSelector) {
     flow_views = [];
-    //set opacity of all small icons to 0.2
-    smallIcons.map((icon) => (icon.style.opacity = 0.2));
     if (flowSelector) {
         flowSelector.map((index) => {
             flow_views.push(allViews[index]);
-            smallIcons[index].style.opacity = 1.0;
         });
     }
     flow_views.push(thankyou);
@@ -392,11 +369,8 @@ const leftButton = document.getElementById("new-button-left");
 
 function showThankYou() {
     allViews.map((v) => (v.style.display = "none"));
-    smallIcons.map((icon) => (icon.style.opacity = 0.2));
     if (flow_views.length >= 1) {
-        flowSelector.map((index) => {
-            smallIcons[index].style.opacity = 1.0;
-        });
+        flowSelector.map((index) => {});
     }
     clockface.style.display = "inline";
     thankyou.style.display = "inline";
@@ -422,12 +396,9 @@ function showThankYou() {
 
 function showMessageStopSurvey() {
     allViews.map((v) => (v.style.display = "none"));
-    smallIcons.map((icon) => (icon.style.opacity = 0.2));
 
     // highlight all the icons corresponding to the questions selected in the fitbit app
-    flowSelector.map((index) => {
-        smallIcons[index].style.opacity = 1.0;
-    });
+    flowSelector.map((index) => {});
     clockface.style.display = "inline";
     svg_stop_survey.style.display = "inline";
 
@@ -532,8 +503,8 @@ for (const button of buttons) {
                     showMessageStopSurvey();
                 } else {
                     // show previous view with flowback set to true
-                    let flowback
-                    showFace(flowback = true);
+                    let flowback;
+                    showFace((flowback = true));
                 }
             } else if (button.value === "flow_stop") {
                 // stop_flow button was pressed
@@ -544,12 +515,12 @@ for (const button of buttons) {
         console.log(`${button.value} clicked`);
 
         if (button.attribute !== "flow_control") {
-            if(button.attribute != "comfort"){
-                console.log(currentView)
+            if (button.attribute != "comfort") {
+                console.log(currentView);
                 //need to associate it to the prevous view
-                feedbackData[covidFlow[currentView-1].name] = button.value;
+                feedbackData[covidFlow[currentView - 1].name] = button.value;
             }
-            console.log(JSON.stringify(feedbackData))
+            console.log(JSON.stringify(feedbackData));
 
             if (covidFlow.length == currentView) {
                 console.log("all covid flow done, showing thankyou");
@@ -564,9 +535,8 @@ for (const button of buttons) {
     });
 }
 
-function showFace(flowback=false) {
-
-    let skipQuestion = false
+function showFace(flowback = false) {
+    let skipQuestion = false;
 
     // go through all views and set to none, show jsonFlow
     allViews.map((v) => {
@@ -576,43 +546,46 @@ function showFace(flowback=false) {
 
     //Does current flow have any requirements?
     if (covidFlow[currentView].requiresAnswer.length !== 0) {
-
         //if so, see if the current feedback meets throse requirements
         covidFlow[currentView].requiresAnswer.map((req) => {
             if (feedbackData[req.question] != req.value) {
                 //requirements not met, skipping question
-                skipQuestion = true
+                skipQuestion = true;
             }
         });
-
     }
 
     if (skipQuestion === false) {
-
         // Set title of question
         document.getElementById("question-text").text =
             covidFlow[currentView].questionText;
+        document.getElementById("question-second-text").text =
+            covidFlow[currentView].questionSecondText;
 
         // set buttons
-        const buttonLocations = ["left", "right", "center"]
+        const buttonLocations = ["left", "right", "center"];
         // hide all buttons
         buttonLocations.forEach((location) => {
-            document.getElementById("new-button-" + location).style.display = "none"
-        })
+            document.getElementById("new-button-" + location).style.display =
+                "none";
+        });
 
         // map through each text element in flow and map to button
-        covidFlow[currentView].iconText.forEach((text, ii) =>{
+        covidFlow[currentView].iconText.forEach((text, ii) => {
             // first show the button
-            document.getElementById("new-button-" + buttonLocations[ii]).style.display = "inline"
+            document.getElementById(
+                "new-button-" + buttonLocations[ii]
+            ).style.display = "inline";
 
             // then map the circle color, image, and text
-            document.getElementById("circle-" + buttonLocations[ii]).style.fill = 
-                covidFlow[currentView].iconColors[ii];
+            document.getElementById(
+                "circle-" + buttonLocations[ii]
+            ).style.fill = covidFlow[currentView].iconColors[ii];
             document.getElementById("image-" + buttonLocations[ii]).href =
                 covidFlow[currentView].iconImages[ii];
             document.getElementById("button-text-" + buttonLocations[ii]).text =
                 covidFlow[currentView].iconText[ii];
-        })
+        });
 
         // move onto next flow
         currentView++;
@@ -622,18 +595,17 @@ function showFace(flowback=false) {
     else if (skipQuestion == true) {
         // if we arrived here through the back button, then skip backwards
         if (flowback === true) {
-            currentView--
-            showFace(flowback = true)
-        // if we arrived here through the normal flow, skip forwards
+            currentView--;
+            showFace((flowback = true));
+            // if we arrived here through the normal flow, skip forwards
         } else {
             currentView++;
-            showFace()
+            showFace();
         }
     }
 
     vibration.start("bump");
 }
-
 
 //-------- END (DEFINE VIEWS BASED ON FLOW SELECTOR) -----------
 
@@ -652,7 +624,6 @@ function vibrate() {
     if (flow_views.length === 1) {
         clockblock.style.display = "inline";
     } else {
-        smallIcons.map((icon) => (icon.style.opacity = 0));
         initiateFeedbackData();
         // Reset currentView to prevent an unattended fitbit from moving through the flow
         currentView = 0;
@@ -736,7 +707,7 @@ function sendDataToCompanion(data) {
                 console.log(`Transfer of ${ft.name} successfully queued.`);
 
                 // Let user know that data is in queue
-                storageLabel.text = `q ${local_file.length}`;
+                storageLabel.text = `please sync fitbit ${local_file.length}`;
                 // On change of ft, launch file transfer event
                 ft.onchange = onFileTransferEvent;
             })
