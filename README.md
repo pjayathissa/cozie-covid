@@ -1,4 +1,4 @@
-
+![Node.js CI](https://github.com/pjayathissa/cozie-covid/workflows/Node.js%20CI/badge.svg)
 # Remote COVID Patient Monitoring With Cozie
 
 ## Goals
