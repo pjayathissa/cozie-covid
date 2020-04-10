@@ -35,7 +35,6 @@ jobs:
           NPM_READONLY_AUTH_TOKEN: ${{ secrets.NPM_READONLY_AUTH_TOKEN }}
 
       - name: npm install
-        working-directory: ./application
         run: npm install
 
       - name: Run ESLint
