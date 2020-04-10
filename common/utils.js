@@ -18,7 +18,7 @@ export function monoDigits(digits) {
 
 // Hex to string
 export function hex2a(hex) {
-    let str = '';
+    let str = "";
     for (let index = 0; index < hex.length; index += 2) {
         const val = parseInt(hex.substr(index, 2), 16);
         if (val) str += String.fromCharCode(val);
