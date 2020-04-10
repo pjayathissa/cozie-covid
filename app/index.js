@@ -248,19 +248,6 @@ const allViews = [
 ];
 let flowSelectorUpdateTime = 0;
 
-//read small icons
-const smallIcons = [
-    document.getElementById("small-thermal"),
-    document.getElementById("small-light"),
-    document.getElementById("small-noise"),
-    document.getElementById("small-indoor"),
-    document.getElementById("small-office"),
-    document.getElementById("small-mood"),
-    document.getElementById("small-clothing"),
-    document.getElementById("small-velocity"),
-    document.getElementById("small-met"),
-    document.getElementById("small-any-change"),
-];
 
 // Flow may have been previously saved locally as flow.txt
 let flowFileRead;
@@ -354,15 +341,12 @@ function processAllFiles() {
     }
 }
 
-//TODO: Consider deleting the small icons
+//TODO: check if this is needed still
 function mapFlows(flowSelector) {
     flow_views = [];
-    //set opacity of all small icons to 0.2
-    smallIcons.map((icon) => (icon.style.opacity = 0.2));
     if (flowSelector) {
         flowSelector.map((index) => {
             flow_views.push(allViews[index]);
-            smallIcons[index].style.opacity = 1.0;
         });
     }
     flow_views.push(thankyou);
@@ -392,10 +376,8 @@ const leftButton = document.getElementById("new-button-left");
 
 function showThankYou() {
     allViews.map((v) => (v.style.display = "none"));
-    smallIcons.map((icon) => (icon.style.opacity = 0.2));
     if (flow_views.length >= 1) {
         flowSelector.map((index) => {
-            smallIcons[index].style.opacity = 1.0;
         });
     }
     clockface.style.display = "inline";
@@ -422,11 +404,9 @@ function showThankYou() {
 
 function showMessageStopSurvey() {
     allViews.map((v) => (v.style.display = "none"));
-    smallIcons.map((icon) => (icon.style.opacity = 0.2));
 
     // highlight all the icons corresponding to the questions selected in the fitbit app
     flowSelector.map((index) => {
-        smallIcons[index].style.opacity = 1.0;
     });
     clockface.style.display = "inline";
     svg_stop_survey.style.display = "inline";
@@ -592,6 +572,8 @@ function showFace(flowback=false) {
         // Set title of question
         document.getElementById("question-text").text =
             covidFlow[currentView].questionText;
+        document.getElementById("question-second-text").text =
+            covidFlow[currentView].questionSecondText;
 
         // set buttons
         const buttonLocations = ["left", "right", "center"]
@@ -652,7 +634,6 @@ function vibrate() {
     if (flow_views.length === 1) {
         clockblock.style.display = "inline";
     } else {
-        smallIcons.map((icon) => (icon.style.opacity = 0));
         initiateFeedbackData();
         // Reset currentView to prevent an unattended fitbit from moving through the flow
         currentView = 0;
@@ -736,7 +717,7 @@ function sendDataToCompanion(data) {
                 console.log(`Transfer of ${ft.name} successfully queued.`);
 
                 // Let user know that data is in queue
-                storageLabel.text = `q ${local_file.length}`;
+                storageLabel.text = `please sync fitbit ${local_file.length}`;
                 // On change of ft, launch file transfer event
                 ft.onchange = onFileTransferEvent;
             })
