@@ -18,6 +18,10 @@ import * as cbor from "cbor";
 import {memory} from "system";
 import {BodyPresenceSensor} from "body-presence";
 
+import covidFlow from "../resources/flows/covid-flow"
+
+console.log(JSON.stringify(covidFlow))
+
 const production = true; // false for dev / debug releases
 
 //-------- CLOCK FACE DESIGN -----------
@@ -199,10 +203,12 @@ const thankyou = document.getElementById("thankyou");
 const svg_stop_survey = document.getElementById("stopSurvey");
 const clockblock = document.getElementById("clockblock");
 
+const jsonFlow = document.getElementById("json-flow");
+
 // Default shows only thank you screen in the flow
-let flow_views = [thankyou];
+let flow_views = [jsonFlow, thankyou];
 // Used to set all views to none when switching between screens
-const allViews = [warmCold, brightDim, loudQuiet, indoorOutdoor, inOffice, happySad, clothing, svg_air_vel, svg_met, svg_change, clockface, thankyou, clockblock, svg_stop_survey];
+const allViews = [warmCold, brightDim, loudQuiet, indoorOutdoor, inOffice, happySad, clothing, svg_air_vel, svg_met, svg_change, clockface, thankyou, clockblock, svg_stop_survey, jsonFlow];
 let flowSelectorUpdateTime = 0;
 
 //read small icons
@@ -378,8 +384,17 @@ const air_vel_low = document.getElementById('air_vel_low');
 const air_vel_medium = document.getElementById("air_vel_medium");
 const air_vel_high = document.getElementById("air_vel_high");
 
+// buttons json
+//TODO: Simplify this
+const centerButton = document.getElementById('button_center');
+const rightButton = document.getElementById("button_right");
+const leftButton = document.getElementById("button_left");
+
 function showFace(view_to_display) {
-    allViews.map(v => v.style.display = "none");
+    console.log(JSON.stringify(allViews))
+    allViews.map(v => {
+        console.log(v)
+        v.style.display = "none"});
     view_to_display.style.display = "inline";
     currentView++;
 
@@ -600,15 +615,15 @@ let buttons = [{
     attribute: 'met',
 }, {
     value: 9,
-    obj: air_vel_low,
+    obj: centerButton,
     attribute: 'air-vel',
 }, {
     value: 10,
-    obj: air_vel_medium,
+    obj: rightButton,
     attribute: 'air-vel',
 }, {
     value: 11,
-    obj: air_vel_high,
+    obj: leftButton,
     attribute: 'air-vel',
 }];
 
@@ -616,9 +631,12 @@ for (const button of buttons) {
     button.obj.addEventListener("click", () => {
         /** Constantly monitors if any buttons have been pressed */
         // init data object on first view click
+        console.log("clicked")
         if (button.attribute === 'comfort') {
             // if any of the two buttons in the main view have been pressed initiate the loop through the selected
-            smallIcons.map(icon => icon.style.opacity = 0);
+            
+
+            // smallIcons.map(icon => icon.style.opacity = 0);
             initiateFeedbackData();
         } else if (button.attribute === 'flow_control') {
             // if any of the two buttons (back arrow or cross) have been selected
@@ -642,14 +660,30 @@ for (const button of buttons) {
         console.log(`${button.value} clicked`);
 
         if (button.attribute !== 'flow_control') {
+            
 
             feedbackData[button.attribute] = button.value;
 
             if (flow_views[currentView] === thankyou) {
                 // if all the views have already been shown
-                showThankYou();
+                //showThankYou();
             } else {
+
+                console.log(covidFlow[currentView].iconColors[0])
+
+                document.getElementById("circle-left").style.fill = covidFlow[currentView].iconColors[0];
+                document.getElementById("circle-right").style.fill = covidFlow[currentView].iconColors[1];
+                document.getElementById("circle-center").style.fill = covidFlow[currentView].iconColors[2];
+
+                document.getElementById("image-left").href = covidFlow[currentView].iconImages[0]
+                document.getElementById("image-right").href = covidFlow[currentView].iconImages[1];
+                document.getElementById("image-center").href = covidFlow[currentView].iconImages[2];
+
+                document.getElementById("button-left-text").text = covidFlow[currentView].iconText[0]
+                document.getElementById("button-right-text").text = covidFlow[currentView].iconText[1];
+                document.getElementById("button-center-text").text = covidFlow[currentView].iconText[2];
                 showFace(flow_views[currentView])
+
             }
         }
     });
