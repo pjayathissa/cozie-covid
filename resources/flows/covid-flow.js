@@ -152,8 +152,9 @@ export default [
 		type: "numerical",
 		requiresAnswer: [{ question: "thermometer", value: 11 }],
 		questionText: "TODO: Add numerical input",
-		questionSecondText: "beans",
-		iconText: ["yes", "no", "don't know"],
+		questionSecondText: "",
+		beans: ["37.0", "37.1", "37.2", "37.3", "37.4", "37.5", "37.6", "37.7", "37.8", "37.9", "38.0"],
+		iconText: ["37.0", "37.1", "37.2", "37.3", "37.4", "37.5", "37.6", "37.7", "37.8", "37.9", "38.0"],
 		iconColors: ["fb-green", "fb-cyan", "fb-orange"],
 		iconImages: [
 			"images/icons/prefer_cold.png",

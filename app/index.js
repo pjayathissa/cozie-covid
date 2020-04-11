@@ -235,12 +235,11 @@ const svg_stop_survey = document.getElementById("stopSurvey");
 const clockblock = document.getElementById("clockblock");
 
 const jsonFlow = document.getElementById("json-flow");
-const jsonFlow2 = document.getElementById("json-flow-numerical");
 
 // Default shows only thank you screen in the flow
-let flow_views = [jsonFlow, jsonFlow2, thankyou];
+let flow_views = [jsonFlow, thankyou];
 // Used to set all views to none when switching between screens
-const allViews = [clockface, thankyou, clockblock, svg_stop_survey, jsonFlow, jsonFlow2];
+const allViews = [clockface, thankyou, clockblock, svg_stop_survey, jsonFlow];
 let flowSelectorUpdateTime = 0;
 
 // Flow may have been previously saved locally as flow.txt
@@ -397,6 +396,7 @@ function showThankYou() {
 
 function showMessageStopSurvey() {
     allViews.map((v) => (v.style.display = "none"));
+    jsonFlow.style.display = "none"; // DO NOT REMOVE. It seems redundant but we need to specify this because we redefined jsonFlow.
 
     // highlight all the icons corresponding to the questions selected in the fitbit app
     flowSelector.map((index) => {});
@@ -546,12 +546,10 @@ function showFace(flowback = false) {
     
     // check if numerical input is required and set jsonFlow
     if (covidFlow[currentView].type === "numerical") {
-        // can also just reset json to numerical element, makes for cleaner code but more difficult to troubleshoot rn.
-        jsonFlow2.style.display="inline";
-    } else {
+        jsonFlow = document.getElementById("json-flow-numerical");
+    }
         // show jsonFlow
         jsonFlow.style.display = "inline";
-    }
     
     //Does current flow have any requirements?
     if (covidFlow[currentView].requiresAnswer.length !== 0) {
@@ -566,16 +564,42 @@ function showFace(flowback = false) {
 
     if (skipQuestion === false) {
         // Set title of question
-        document.getElementById("question-text").text =
-            covidFlow[currentView].questionText;
-        document.getElementById("question-second-text").text =
-            covidFlow[currentView].questionSecondText;
+        
 
         if (covidFlow[currentView].type === "numerical") {
-            console.log(document.getElementById("question-text").text);
-            document.getElementById("question-text").text = "Look at this new text, isn't it amazing";
-            console.log(document.getElementById("question-text").text);
+            document.getElementById("question-text-numerical").text = covidFlow[currentView].questionText;
+            document.getElementById("question-second-text-numerical").text = covidFlow[currentView].questionSecondText;
+            
+            let VTList = document.getElementById("numerical-input-list");
+
+            let NUM_ELEMS = covidFlow[currentView].iconText.length;
+
+            VTList.delegate = {
+            getTileInfo: function(index) {
+                return {
+                type: "numerical-input-pool",
+                value: covidFlow[currentView].iconText[index],
+                index: index
+                };
+            },
+            configureTile: function(tile, info) {
+                if (info.type == "numerical-input-pool") {
+                tile.getElementById("text").text = `${info.value} ${info.index}`;
+                let touch = tile.getElementById("numerical-input-hitbox");
+                touch.onclick = evt => {
+                    console.log(`touched: ${info.index}`);
+                };
+                }
+            }
+            };
+
+            // VTList.length must be set AFTER VTList.delegate
+            VTList.length = NUM_ELEMS;
+            
         } else {
+            document.getElementById("question-text").text = covidFlow[currentView].questionText;
+            document.getElementById("question-second-text").text = covidFlow[currentView].questionSecondText;
+
             // set buttons
             const buttonLocations = ["left", "right", "center"];
             // hide all buttons
