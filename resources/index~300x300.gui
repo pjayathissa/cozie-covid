@@ -16,6 +16,7 @@
   <link rel="import" href="views/any_change.gui" />
 
   <link rel="import" href="views/json-flow.gui" />
+  <link rel="import" href="views/json-flow-numerical.gui" />
 
   
 </svg>

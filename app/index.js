@@ -235,11 +235,12 @@ const svg_stop_survey = document.getElementById("stopSurvey");
 const clockblock = document.getElementById("clockblock");
 
 const jsonFlow = document.getElementById("json-flow");
+const jsonFlow2 = document.getElementById("json-flow-numerical");
 
 // Default shows only thank you screen in the flow
-let flow_views = [jsonFlow, thankyou];
+let flow_views = [jsonFlow, jsonFlow2, thankyou];
 // Used to set all views to none when switching between screens
-const allViews = [clockface, thankyou, clockblock, svg_stop_survey, jsonFlow];
+const allViews = [clockface, thankyou, clockblock, svg_stop_survey, jsonFlow, jsonFlow2];
 let flowSelectorUpdateTime = 0;
 
 // Flow may have been previously saved locally as flow.txt
@@ -538,12 +539,20 @@ for (const button of buttons) {
 function showFace(flowback = false) {
     let skipQuestion = false;
 
-    // go through all views and set to none, show jsonFlow
+    // go through all views and set to none
     allViews.map((v) => {
         v.style.display = "none";
     });
-    jsonFlow.style.display = "inline";
-
+    
+    // check if numerical input is required and set jsonFlow
+    if (covidFlow[currentView].type === "numerical") {
+        // can also just reset json to numerical element, makes for cleaner code but more difficult to troubleshoot rn.
+        jsonFlow2.style.display="inline";
+    } else {
+        // show jsonFlow
+        jsonFlow.style.display = "inline";
+    }
+    
     //Does current flow have any requirements?
     if (covidFlow[currentView].requiresAnswer.length !== 0) {
         //if so, see if the current feedback meets throse requirements
@@ -562,31 +571,36 @@ function showFace(flowback = false) {
         document.getElementById("question-second-text").text =
             covidFlow[currentView].questionSecondText;
 
-        // set buttons
-        const buttonLocations = ["left", "right", "center"];
-        // hide all buttons
-        buttonLocations.forEach((location) => {
-            document.getElementById("new-button-" + location).style.display =
-                "none";
-        });
+        if (covidFlow[currentView].type === "numerical") {
+            console.log(document.getElementById("question-text").text);
+            document.getElementById("question-text").text = "Look at this new text, isn't it amazing";
+            console.log(document.getElementById("question-text").text);
+        } else {
+            // set buttons
+            const buttonLocations = ["left", "right", "center"];
+            // hide all buttons
+            buttonLocations.forEach((location) => {
+                document.getElementById("new-button-" + location).style.display =
+                    "none";
+            });
 
-        // map through each text element in flow and map to button
-        covidFlow[currentView].iconText.forEach((text, ii) => {
-            // first show the button
-            document.getElementById(
-                "new-button-" + buttonLocations[ii]
-            ).style.display = "inline";
+            // map through each text element in flow and map to button
+            covidFlow[currentView].iconText.forEach((text, ii) => {
+                // first show the button
+                document.getElementById(
+                    "new-button-" + buttonLocations[ii]
+                ).style.display = "inline";
 
-            // then map the circle color, image, and text
-            document.getElementById(
-                "circle-" + buttonLocations[ii]
-            ).style.fill = covidFlow[currentView].iconColors[ii];
-            document.getElementById("image-" + buttonLocations[ii]).href =
-                covidFlow[currentView].iconImages[ii];
-            document.getElementById("button-text-" + buttonLocations[ii]).text =
-                covidFlow[currentView].iconText[ii];
-        });
-
+                // then map the circle color, image, and text
+                document.getElementById(
+                    "circle-" + buttonLocations[ii]
+                ).style.fill = covidFlow[currentView].iconColors[ii];
+                document.getElementById("image-" + buttonLocations[ii]).href =
+                    covidFlow[currentView].iconImages[ii];
+                document.getElementById("button-text-" + buttonLocations[ii]).text =
+                    covidFlow[currentView].iconText[ii];
+            });
+        }
         // move onto next flow
         currentView++;
     }

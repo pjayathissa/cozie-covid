@@ -152,7 +152,7 @@ export default [
 		type: "numerical",
 		requiresAnswer: [{ question: "thermometer", value: 11 }],
 		questionText: "TODO: Add numerical input",
-		questionSecondText: "",
+		questionSecondText: "beans",
 		iconText: ["yes", "no", "don't know"],
 		iconColors: ["fb-green", "fb-cyan", "fb-orange"],
 		iconImages: [

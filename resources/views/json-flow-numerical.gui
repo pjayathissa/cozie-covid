@@ -1,0 +1,9 @@
+<svg id="json-flow-numerical" display="none">
+
+  <g id="main-question">
+    <text id="question-text" x="50%" y="11%" class="comfyLabel"></text>
+    <text id="question-second-text" x="50%" y="21%" class="comfyLabel"></text>
+  </g>
+
+
+</svg>
