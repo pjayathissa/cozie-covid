@@ -235,11 +235,12 @@ const svg_stop_survey = document.getElementById("stopSurvey");
 const clockblock = document.getElementById("clockblock");
 
 const jsonFlow = document.getElementById("json-flow");
+const jsonFlow2 = document.getElementById("json-flow-numerical");
 
 // Default shows only thank you screen in the flow
-let flow_views = [jsonFlow, thankyou];
+let flow_views = [jsonFlow, thankyou,jsonFlow2];
 // Used to set all views to none when switching between screens
-const allViews = [clockface, thankyou, clockblock, svg_stop_survey, jsonFlow];
+const allViews = [clockface, thankyou, clockblock, svg_stop_survey, jsonFlow, jsonFlow2];
 let flowSelectorUpdateTime = 0;
 
 // Flow may have been previously saved locally as flow.txt
@@ -546,10 +547,11 @@ function showFace(flowback = false) {
     
     // check if numerical input is required and set jsonFlow
     if (covidFlow[currentView].type === "numerical") {
-        jsonFlow = document.getElementById("json-flow-numerical");
-    }
-        // show jsonFlow
+        jsonFlow2.style.display = "inline";
+    } else {
         jsonFlow.style.display = "inline";
+    }
+        
     
     //Does current flow have any requirements?
     if (covidFlow[currentView].requiresAnswer.length !== 0) {
@@ -572,7 +574,8 @@ function showFace(flowback = false) {
             
             let VTList = document.getElementById("numerical-input-list");
 
-            let NUM_ELEMS = covidFlow[currentView].iconText.length;
+            // let NUM_ELEMS = covidFlow[currentView].iconText.length;
+            let NUM_ELEMS = 10;
 
             VTList.delegate = {
             getTileInfo: function(index) {
