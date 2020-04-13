@@ -6,7 +6,7 @@ export default [
 		questionText: "Do you have a cough?",
 		questionSecondText: "",
 		iconText: ["yes", "no"],
-		iconColors: ["fb-red", "fb-green"],
+		iconColors: ["fb-orange", "fb-green"],
 		iconImages: [
 			"images/icons/cough.png",
 			"images/icons/neutral.png",
@@ -18,8 +18,8 @@ export default [
 		requiresAnswer: [{ question: "cough", value: 11 }],
 		questionText: "Is it worse than ",
 		questionSecondText: "your normal cough?",
-		iconText: ["yes", "no", "same"],
-		iconColors: ["fb-red", "fb-cyan", "fb-orange"],
+		iconText: ["worse", "better", "same"],
+		iconColors: ["fb-purple", "fb-green", "fb-orange"],
 		iconImages: [
 			"images/icons/cough_high.png",
 			"images/icons/cough_low.png",
@@ -33,7 +33,7 @@ export default [
 		questionText: "How frequent is",
 		questionSecondText: "your cough?",
 		iconText: ["constantly", "moderately", "light"],
-		iconColors: ["fb-red", "fb-orange", "fb-cyan"],
+		iconColors: ["fb-purple", "fb-orange", "fb-green"],
 		iconImages: [
 			"images/icons/freq3.png",
 			"images/icons/freq2.png",
@@ -46,12 +46,12 @@ export default [
 		requiresAnswer: [{ question: "cough", value: 11 }],
 		questionText: "Is your cough",
 		questionSecondText: "getting worse?",
-		iconText: ["yes", "no", "same"],
-		iconColors: ["fb-red", "fb-cyan", "fb-orange"],
+		iconText: ["worsening", "improving", "same"],
+		iconColors: ["fb-purple", "fb-green", "fb-orange"],
 		iconImages: [
 			"images/icons/cough_high.png",
 			"images/icons/cough_low.png",
-			"images/icons/cough_mod.png",
+			"images/icons/cough.png",
 		],
 	},
 	{
@@ -61,7 +61,7 @@ export default [
 		questionText: "Is it difficult to breath?",
 		questionSecondText: "",
 		iconText: ["yes", "no"],
-		iconColors: ["fb-red", "fb-green"],
+		iconColors: ["fb-orange", "fb-green"],
 		iconImages: [
 			"images/icons/breath_worse.png",
 			"images/icons/breath_good.png",
@@ -73,8 +73,8 @@ export default [
 		requiresAnswer: [{ question: "breathing", value: 11 }],
 		questionText: "Is your breathing",
 		questionSecondText: "getting worse?",
-		iconText: ["yes", "no", "same"],
-		iconColors: ["fb-red", "fb-cyan", "fb-orange"],
+		iconText: ["worsening", "improving", "same"],
+		iconColors: ["fb-purple", "fb-green", "fb-orange"],
 		iconImages: [
 			"images/icons/breath_worse.png",
 			"images/icons/breath_good.png",
@@ -88,7 +88,7 @@ export default [
 		questionText: "Is it difficult to breath",
 		questionSecondText: "while resting?",
 		iconText: ["yes", "no"],
-		iconColors: ["fb-red", "fb-green"],
+		iconColors: ["fb-orange", "fb-green"],
 		iconImages: [
 			"images/icons/breath_worse.png",
 			"images/icons/breath_good.png",
@@ -100,8 +100,8 @@ export default [
 		requiresAnswer: [{ question: "breathing", value: 11 }],
 		questionText: "Are you concerned with",
 		questionSecondText: "your breathing?",
-		iconText: ["yes", "no"],
-		iconColors: ["fb-orange", "fb-cyan"],
+		iconText: ["concerned", "no"],
+		iconColors: ["fb-orange", "fb-green"],
 		iconImages: [
 			"images/icons/worry.png",
 			"images/icons/neutral.png",
@@ -114,10 +114,10 @@ export default [
 		questionText: "Do you have a fever?",
 		questionSecondText: "",
 		iconText: ["yes", "no", "don't know"],
-		iconColors: ["fb-orange", "fb-cyan", "fb-indigo"],
+		iconColors: ["fb-orange", "fb-green", "fb-slate"],
 		iconImages: [
 			"images/icons/fever_high.png",
-			"images/icons/fever_low.png",
+			"images/icons/healthy.png",
 			"images/icons/fever_unk.png",
 		],
 	},
@@ -127,7 +127,7 @@ export default [
 		requiresAnswer: [{ question: "fever", value: 11 }],
 		questionText: "Are you concerned",
 		questionSecondText: "about your fever?",
-		iconText: ["yes", "no"],
+		iconText: ["concerned", "no"],
 		iconColors: ["fb-orange", "fb-cyan"],
 		iconImages: [
 			"images/icons/worry.png",
@@ -141,10 +141,10 @@ export default [
 		questionText: "Do you have a",
 		questionSecondText: "thermometer?",
 		iconText: ["yes", "no"],
-		iconColors: ["fb-green", "fb-red"],
+		iconColors: ["fb-green", "fb-orange"],
 		iconImages: [
-			"images/icons/thermo_have.png",
-			"images/icons/thermo_no.png",
+			"images/icons/thermometer.png",
+			"images/icons/thermometer_no.png",
 		],
 	},
 	{
@@ -168,7 +168,7 @@ export default [
 		questionText: "Do you feel tired?",
 		questionSecondText: "",
 		iconText: ["yes", "no"],
-		iconColors: ["fb-orange", "fb-cyan"],
+		iconColors: ["fb-orange", "fb-green"],
 		iconImages: [
 			"images/icons/lethargy.png",
 			"images/icons/lethargy_no.png",
@@ -180,12 +180,12 @@ export default [
 		requiresAnswer: [{ question: "lethargy", value: 11 }],
 		questionText: "How severe is your",
 		questionSecondText: "tiredness",
-		iconText: ["mild", "moderate", "bed-bound"],
-		iconColors: ["fb-green", "fb-cyan", "fb-red"],
+		iconText: ["bed bound", "mild", "moderate"],
+		iconColors: ["fb-purple", "fb-green", "fb-orange"],
 		iconImages: [
-			"images/icons/lethargy_no.png",
-			"images/icons/lethargy.png",
 			"images/icons/lethargy_bed.png",
+			"images/icons/lethargy_mild.png",
+			"images/icons/lethargy.png",
 		],
 	},
 ];
