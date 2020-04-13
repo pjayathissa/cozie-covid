@@ -21,9 +21,9 @@ export default [
 		iconText: ["yes", "no", "same"],
 		iconColors: ["fb-red", "fb-cyan", "fb-orange"],
 		iconImages: [
-			"images/icons/high_cough.png",
-			"images/icons/low_cough.png",
-			"images/icons/mod_cough.png",
+			"images/icons/cough_high.png",
+			"images/icons/cough_low.png",
+			"images/icons/cough_mod.png",
 		],
 	},
 	{
@@ -49,9 +49,9 @@ export default [
 		iconText: ["yes", "no", "same"],
 		iconColors: ["fb-red", "fb-cyan", "fb-orange"],
 		iconImages: [
-			"images/icons/high_cough.png",
-			"images/icons/low_cough.png",
-			"images/icons/mod_cough.png",
+			"images/icons/cough_high.png",
+			"images/icons/cough_low.png",
+			"images/icons/cough_mod.png",
 		],
 	},
 	{
@@ -143,8 +143,8 @@ export default [
 		iconText: ["yes", "no"],
 		iconColors: ["fb-green", "fb-red"],
 		iconImages: [
-			"images/icons/have_thermo.png",
-			"images/icons/no_thermo.png",
+			"images/icons/thermo_have.png",
+			"images/icons/thermo_no.png",
 		],
 	},
 	{
@@ -171,7 +171,7 @@ export default [
 		iconColors: ["fb-orange", "fb-cyan"],
 		iconImages: [
 			"images/icons/lethargy.png",
-			"images/icons/no_lethargy.png",
+			"images/icons/lethargy_no.png",
 		],
 	},
 	{
@@ -183,9 +183,9 @@ export default [
 		iconText: ["mild", "moderate", "bed-bound"],
 		iconColors: ["fb-green", "fb-cyan", "fb-red"],
 		iconImages: [
-			"images/icons/no_lethargy.png",
+			"images/icons/lethargy_no.png",
 			"images/icons/lethargy.png",
-			"images/icons/bedrest.png",
+			"images/icons/lethargy_bed.png",
 		],
 	},
 ];
