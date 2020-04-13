@@ -9,7 +9,7 @@ export default [
 		iconColors: ["fb-red", "fb-green"],
 		iconImages: [
 			"images/icons/cough.png",
-			"images/icons/okay.png",
+			"images/icons/neutral.png",
 		],
 	},
 	{
@@ -23,7 +23,7 @@ export default [
 		iconImages: [
 			"images/icons/cough_high.png",
 			"images/icons/cough_low.png",
-			"images/icons/cough_mod.png",
+			"images/icons/cough.png",
 		],
 	},
 	{
