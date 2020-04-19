@@ -4,31 +4,51 @@
     <text id="question-text-numerical" x="50%" y="11%" class="comfyLabel"></text>
     <text id="question-second-text-numerical" x="50%" y="21%" class="comfyLabel"></text>
   </g>
+  
    <defs>
-    <symbol id="numerical-input-item" href="#tile-list-item" focusable="false"
-            pointer-events="none" system-events="all" display="none" width="50%">
-      <text id="text" text-length="5" text-anchor="middle"/>
+    <symbol id="my-tile-item" href="#tile-list-item" focusable="false"
+            pointer-events="none" system-events="all" width="50%">
+      <text id="text" text-anchor="middle"/>
       <rect id="tile-divider-bottom" class="tile-divider-bottom" />
-      <rect id="numerical-input-hitbox" pointer-events="all" x="-50%" y="0" width="100%"
+      <rect id="touch-me" pointer-events="all" x="-50%" y="0" width="100%"
             height="100%-2" opacity="0" />
     </symbol>
   </defs>
-  <use id="numerical-input-list" href="#tile-list" width="40%" height="50%" x="50%" y="25%">
-    <var id="virtual" value="1" />
-    <var id="peek-enabled" value="0" />
+  <use id="my-list" href="#tile-list" x="50%" width="40%" y="25%" height="50%">
     <var id="separator-height-bottom" value="2" />
-
-    <use id="numerical-input-pool" href="#tile-list-pool">
-      <use id="numerical-input-pool[0]" href="#numerical-input-item" class="tile-list-item" />
-      <use id="numerical-input-pool[1]" href="#numerical-input-item" class="tile-list-item" />
-      <use id="numerical-input-pool[2]" href="#numerical-input-item" class="tile-list-item" />
-      <use id="numerical-input-pool[3]" href="#numerical-input-item" class="tile-list-item" />
-      <use id="numerical-input-pool[4]" href="#numerical-input-item" class="tile-list-item" />
-      <use id="numerical-input-pool[5]" href="#numerical-input-item" class="tile-list-item" />
-      <use id="numerical-input-pool[6]" href="#numerical-input-item" class="tile-list-item" />
-      <use id="numerical-input-pool[7]" href="#numerical-input-item" class="tile-list-item" />
-      <use id="numerical-input-pool[8]" href="#numerical-input-item" class="tile-list-item" />
-      <use id="numerical-input-pool[9]" href="#numerical-input-item" class="tile-list-item" />
+    <var id="peek-enabled" value="0" />
+    <use href="#my-tile-item" class="tile-list-item">
+      <set href="text" attributeName="text-buffer" to="xxxx" />
+    </use>
+    <use href="#my-tile-item" class="tile-list-item">
+      <set href="text" attributeName="text-buffer" to="xxxx" />
+    </use>
+    <use href="#my-tile-item" class="tile-list-item">
+      <set href="text" attributeName="text-buffer" to="xxxx" />
+    </use>
+    <use href="#my-tile-item" class="tile-list-item">
+      <set href="text" attributeName="text-buffer" to="xxxx" />
+    </use>
+    <use href="#my-tile-item" class="tile-list-item">
+      <set href="text" attributeName="text-buffer" to="xxxx" />
+    </use>
+     <use href="#my-tile-item" class="tile-list-item">
+      <set href="text" attributeName="text-buffer" to="xxxx" />
+    </use>
+     <use href="#my-tile-item" class="tile-list-item">
+      <set href="text" attributeName="text-buffer" to="xxxx" />
+    </use>
+     <use href="#my-tile-item" class="tile-list-item">
+      <set href="text" attributeName="text-buffer" to="xxxx" />
+    </use>
+     <use href="#my-tile-item" class="tile-list-item">
+      <set href="text" attributeName="text-buffer" to="xxxx" />
+    </use>
+     <use href="#my-tile-item" class="tile-list-item">
+      <set href="text" attributeName="text-buffer" to="xxxx" />
+    </use>
+     <use href="#my-tile-item" class="tile-list-item">
+      <set href="text" attributeName="text-buffer" to="xxxx" />
     </use>
   </use>
 

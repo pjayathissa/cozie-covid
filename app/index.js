@@ -572,32 +572,20 @@ function showFace(flowback = false) {
             document.getElementById("question-text-numerical").text = covidFlow[currentView].questionText;
             document.getElementById("question-second-text-numerical").text = covidFlow[currentView].questionSecondText;
             
-            let VTList = document.getElementById("numerical-input-list");
+            let list = document.getElementById("my-list");
+            let items = list.getElementsByClassName("tile-list-item");
 
-            // let NUM_ELEMS = covidFlow[currentView].iconText.length;
-            let NUM_ELEMS = 10;
-
-            VTList.delegate = {
-            getTileInfo: function(index) {
-                return {
-                type: "numerical-input-pool",
-                value: covidFlow[currentView].iconText[index],
-                index: index
-                };
-            },
-            configureTile: function(tile, info) {
-                if (info.type == "numerical-input-pool") {
-                tile.getElementById("text").text = `${info.value} ${info.index}`;
-                let touch = tile.getElementById("numerical-input-hitbox");
-                touch.onclick = evt => {
-                    console.log(`touched: ${info.index}`);
-                };
+            items.forEach((element, index) => {
+                element.text = covidFlow[currentView].iconText[index];
+                let touch = element.getElementById("touch-me");
+                touch.onclick = (evt) => {
+                    console.log(`touched: ${index}`);
+                    feedbackData[covidFlow[currentView-1].name] = covidFlow[currentView-1].iconText[index];
+                    // make sure confirm loads correctly
+                    console.log(JSON.stringify(feedbackData));
+                    showFace()
                 }
-            }
-            };
-
-            // VTList.length must be set AFTER VTList.delegate
-            VTList.length = NUM_ELEMS;
+            });
             
         } else {
             document.getElementById("question-text").text = covidFlow[currentView].questionText;
