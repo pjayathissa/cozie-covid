@@ -235,12 +235,12 @@ const svg_stop_survey = document.getElementById("stopSurvey");
 const clockblock = document.getElementById("clockblock");
 
 const jsonFlow = document.getElementById("json-flow");
-const jsonFlow2 = document.getElementById("json-flow-numerical");
+const jsonFlowNumerical = document.getElementById("json-flow-numerical");
 
 // Default shows only thank you screen in the flow
-let flow_views = [jsonFlow, thankyou,jsonFlow2];
+let flow_views = [jsonFlow, thankyou,jsonFlowNumerical];
 // Used to set all views to none when switching between screens
-const allViews = [clockface, thankyou, clockblock, svg_stop_survey, jsonFlow, jsonFlow2];
+const allViews = [clockface, thankyou, clockblock, svg_stop_survey, jsonFlow, jsonFlowNumerical];
 let flowSelectorUpdateTime = 0;
 
 // Flow may have been previously saved locally as flow.txt
@@ -397,8 +397,7 @@ function showThankYou() {
 
 function showMessageStopSurvey() {
     allViews.map((v) => (v.style.display = "none"));
-    jsonFlow.style.display = "none"; // DO NOT REMOVE. It seems redundant but we need to specify this because we redefined jsonFlow.
-
+    
     // highlight all the icons corresponding to the questions selected in the fitbit app
     flowSelector.map((index) => {});
     clockface.style.display = "inline";
@@ -545,9 +544,9 @@ function showFace(flowback = false) {
         v.style.display = "none";
     });
     
-    // check if numerical input is required and set jsonFlow
+    // check if numerical input is required and set Flow
     if (covidFlow[currentView].type === "numerical") {
-        jsonFlow2.style.display = "inline";
+        jsonFlowNumerical.style.display = "inline";
     } else {
         jsonFlow.style.display = "inline";
     }
@@ -572,14 +571,14 @@ function showFace(flowback = false) {
             document.getElementById("question-text-numerical").text = covidFlow[currentView].questionText;
             document.getElementById("question-second-text-numerical").text = covidFlow[currentView].questionSecondText;
             
-            let list = document.getElementById("my-list");
+            let list = document.getElementById("tile-list");
             let items = list.getElementsByClassName("tile-list-item");
 
             items.forEach((element, index) => {
                 element.text = covidFlow[currentView].iconText[index];
-                let touch = element.getElementById("touch-me");
+                let touch = element.getElementById("tile-list-item-hitbox");
                 touch.onclick = (evt) => {
-                    console.log(`touched: ${index}`);
+                    console.log(`${index} clicked`);
                     feedbackData[covidFlow[currentView-1].name] = covidFlow[currentView-1].iconText[index];
                     // make sure confirm loads correctly
                     covidFlow[currentView].requiresAnswer[0].value = covidFlow[currentView-1].iconText[index];
