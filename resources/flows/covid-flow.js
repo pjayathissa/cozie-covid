@@ -162,6 +162,16 @@ export default [
 		],
 	},
 	{
+		name: "fever-confirm",
+		type: "icon",
+		requiresAnswer: [{ question: "fever", value: "determined by code" }],
+		questionText: "You selected xxxx.",
+		questionSecondText: "Is this correct?",
+		iconText: ["yes"],
+		iconColors: ["fb-green"],
+		iconImages: ["images/icons/prefer_cold.png",],
+	},
+	{
 		name: "lethargy",
 		type: "icon",
 		requiresAnswer: [],

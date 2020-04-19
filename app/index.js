@@ -517,7 +517,7 @@ for (const button of buttons) {
         console.log(`${button.value} clicked`);
 
         if (button.attribute !== "flow_control") {
-            if (button.attribute != "comfort") {
+            if (button.attribute != "comfort" && covidFlow[currentView-1].name.indexOf("confirm") == -1) {
                 console.log(currentView);
                 //need to associate it to the prevous view
                 feedbackData[covidFlow[currentView - 1].name] = button.value;
@@ -582,6 +582,7 @@ function showFace(flowback = false) {
                     console.log(`touched: ${index}`);
                     feedbackData[covidFlow[currentView-1].name] = covidFlow[currentView-1].iconText[index];
                     // make sure confirm loads correctly
+                    covidFlow[currentView].requiresAnswer[0].value = covidFlow[currentView-1].iconText[index];
                     console.log(JSON.stringify(feedbackData));
                     showFace()
                 }
