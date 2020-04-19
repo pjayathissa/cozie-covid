@@ -591,7 +591,9 @@ function showFace(flowback = false) {
         } else {
             document.getElementById("question-text").text = covidFlow[currentView].questionText;
             document.getElementById("question-second-text").text = covidFlow[currentView].questionSecondText;
-
+            if(covidFlow[currentView].name.indexOf("confirm")!=-1) {
+                document.getElementById("question-text").text = covidFlow[currentView].questionText.replace("xxxx",feedbackData[covidFlow[currentView-1].name]);
+            }
             // set buttons
             const buttonLocations = ["left", "right", "center"];
             // hide all buttons
