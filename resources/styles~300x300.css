@@ -130,3 +130,13 @@
     r: "35";
     fill: #10A30B;
 }
+
+.tile-list-item {
+  height: 63;
+}
+
+.tile-list-item text {
+  height: 32;
+  font-family: System-Regular;
+  fill: "white";
+}

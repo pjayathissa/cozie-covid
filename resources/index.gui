@@ -15,6 +15,7 @@
   <link rel="import" href="views/metabolic_rate.gui" />
   <link rel="import" href="views/any_change.gui" />
 
+  <link rel="import" href="views/json-flow-numerical.gui" />
   <link rel="import" href="views/json-flow.gui" />
 
   
